@@ -163,6 +163,39 @@ class Controller(object):
         cmd += Controller.__toVisca2b(tilt)
         self.expectOK(cmd)
 
+    def callLight(self, state):
+    	""" Sends a command to control the state of the call LED - can be blinking, on or off """
+    	lookup = {
+    	'on': b'\x01\x33\x01\x01',
+    	'off': b'\x01\x33\x01\x00',
+    	'blink': b'\x01\x33\x01\x02'
+    	}
+    	self.expectOK(lookup[state])
+
+    def powerLight(self, state):
+    	""" Sends a command to control the state of the power LED - can be on or off """
+    	lookup = {
+    	'on': b'\x01\x33\x02\x01',
+    	'off': b'\x01\x33\x02\x00',
+    	}
+    	self.expectOK(lookup[state])
+
+    def flipImage(self, state):
+    	""" Sends a command to flip the image - can be on or off """
+    	lookup = {
+    	'on': b'\x01\x04\x66\x02',
+    	'off': b'\x01\x04\x66\x03',
+    	}
+    	self.expectOK(lookup[state])
+
+    def mirrorImage(self, state):
+    	""" Sends a command to mirror the image - can be on or off """
+    	lookup = {
+    	'on': b'\x01\x04\x61\x02',
+    	'off': b'\x01\x04\x61\x03',
+    	}
+    	self.expectOK(lookup[state])
+
     def getResponse(self, command):
         """Sends a command (in hex) to the camera and returns the result as bytes"""
         if self.s == None:
